@@ -80,7 +80,7 @@ function App() {
           <div className="text-base">{`Winner : ${winner} Congrat`}</div>
           <button
             onClick={restartGame}
-            className="border border-green-100 px-2 py-1 rounded-md bg-green-500 text-white shadow-xl"
+            className="border border-green-500 px-2 py-1 rounded-md bg-green-500 text-white shadow-xl"
           >
             Restart
           </button>
