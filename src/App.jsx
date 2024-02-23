@@ -18,6 +18,7 @@ const defaultBoardState = Array.from({ length: 9 }, (_, i) => {
 });
 
 function App() {
+  const [isDraw, setIsDraw] = useState(false);
   const [player, setPlayer] = useState("X");
   const [winner, setWinner] = useState(null);
   const [board, setBoard] = useState(defaultBoardState);
@@ -32,6 +33,7 @@ function App() {
 
   const restartGame = () => {
     setWinner(null);
+    setIsDraw(false);
     setBoard(defaultBoardState);
     setPlayer("X");
   };
@@ -45,12 +47,15 @@ function App() {
       ) {
         setWinner(board[conditionIndex[0]]);
       }
+      if (!winner && board.every((tile) => tile !== null)) {
+        setIsDraw(true);
+      }
     });
-  }, [board]);
+  }, [board, winner]);
 
   return (
-    <div className="container w-full h-[100vh] flex flex-col items-center justify-center bg-gr ">
-      {winner ? (
+    <div className="container w-[256px] h-[100vh] flex flex-col items-center justify-center bg-gr ">
+      {winner || isDraw ? (
         <div className="text-lg font-serif">- Game End -</div>
       ) : (
         <div>{`Next Player is :${player}`}</div>
@@ -64,7 +69,7 @@ function App() {
               handleClick(tile, index);
             }}
             className={classNames(
-              "w-16 h-16 bg-zinc-200 rounded-sm border border-zinc-300 shadow-lg",
+              "w-16 h-16 bg-zinc-200 rounded-sm border border-zinc-300 shadow-lg hover:scale-95",
               {
                 "pointer-events-none": winner,
               }
@@ -75,9 +80,11 @@ function App() {
         ))}
       </div>
 
-      {winner && (
-        <div className="flex items-center justify-center gap-x-12">
-          <div className="text-base">{`Winner : ${winner} Congrat`}</div>
+      {(winner || isDraw) && (
+        <div className="w-full flex items-center justify-between">
+          <div className="text-base">
+            {winner ? `Winner : ${winner} Congrat` : isDraw && `Game is draw`}
+          </div>
           <button
             onClick={restartGame}
             className="border border-green-500 px-2 py-1 rounded-md bg-green-500 text-white shadow-xl"
