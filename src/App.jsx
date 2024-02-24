@@ -54,9 +54,9 @@ function App() {
   }, [board, winner]);
 
   return (
-    <div className="container w-[256px] h-[100vh] flex flex-col items-center justify-center bg-gr ">
+    <div className="container w-[256px] h-[100vh] flex flex-col items-center justify-center  ">
       {winner || isDraw ? (
-        <div className="text-lg font-serif">- Game End -</div>
+        <div className="text-lg font-serif">- Game Over -</div>
       ) : (
         <div>{`Next Player is :${player}`}</div>
       )}
